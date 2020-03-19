@@ -7,6 +7,15 @@
 
 		<title>Batracer Set up adjuster</title>
 		<link rel="stylesheet" href="css/bootstrap.min.css">
+		<style>
+			.unchecked{
+				background-color: #ddd;
+			}
+			.unchecked td{
+				border:1px solid #fff !important;
+			}
+
+		</style>
 	</head>
 
 	<body>
@@ -18,13 +27,15 @@
 					</div>
 					<form class="form" role="form">
 						<div class="form-group">
-							<table class="table table-bordered table-hover table-condensed">
+							<table id="main" class="table table-bordered table-hover table-condensed">
 								<tr>
+									<th>&nbsp;</th>
 									<th>&nbsp;</th>
 									<th>Front</th>
 									<th>Rear</th>
 								</tr>
-								<tr>
+								<tr class="wings">
+									<td><input type="checkbox" id="wings" name="wings" value="true" data-bind="checked: wings" /></td>
 									<td>Wings</td>
 									<td>
 										<input size="3" data-bind="value: wingsFront">
@@ -33,7 +44,8 @@
 										<input size="3" data-bind="value: wingsRear">
 									</td>
 								</tr>
-								<tr>
+								<tr class="suspension">
+									<td><input type="checkbox" id="suspension" name="suspension" value="true" data-bind="checked: suspension" /></td>
 									<td>Suspension</td>
 									<td>
 										<input size="3" data-bind="value: suspensionFront">
@@ -42,7 +54,8 @@
 										<input size="3" data-bind="value: suspensionRear">
 									</td>
 								</tr>
-								<tr>
+								<tr class="antirollbar">
+									<td><input type="checkbox" id="antiRollBar" name="antiRollBar" value="true" data-bind="checked: antiRollBar" /></td>
 									<td>Anti-Roll Bar</td>
 									<td>
 										<input size="3" data-bind="value: antiRollBarFront">
@@ -51,7 +64,8 @@
 										<input size="3" data-bind="value: antiRollBarRear">
 									</td>
 								</tr>
-								<tr>
+								<tr class="rideheight">
+									<td><input type="checkbox" id="rideHeight" name="rideHeight" value="true" data-bind="checked: rideHeight" /></td>
 									<td>Ride Height</td>
 									<td>
 										<input size="3" data-bind="value: rideHeightFront">
@@ -60,7 +74,8 @@
 										<input size="3" data-bind="value: rideHeightRear">
 									</td>
 								</tr>
-								<tr>
+								<tr class="tyrepressure">
+									<td><input type="checkbox" id="tyrePressure" name="tyrePressure" value="true" data-bind="checked: tyrePressure" /></td>
 									<td>Tyre pressure</td>
 									<td>
 										<input size="3" data-bind="value: tyrePressureFront">
@@ -69,14 +84,16 @@
 										<input size="3" data-bind="value: tyrePressureRear">
 									</td>
 								</tr>
-								<tr>
+								<tr class="gears">
+									<td><input type="checkbox" id="gears" name="gears" value="true" data-bind="checked: gearsI" /></td>
 									<td>Gears</td>
 									<td>&nbsp;</td>
 									<td>
 										<input size="3" data-bind="value: gears">
 									</td>
 								</tr>
-								<tr>
+								<tr class="brakebias">
+									<td><input type="checkbox" id="brakeBias" name="brakeBias" value="true" data-bind="checked: brakeBiasI" /></td>
 									<td>Brake bias</td>
 									<td>&nbsp;</td>
 									<td>
@@ -176,70 +193,80 @@
 									<th>Front</th>
 									<th>Rear</th>
 								</tr>
-								<tr>
+								<tr class="wings">
 									<td>Wings</td>
 									<td>
-										<input size="3" disabled data-bind="value: finalWingsFront" />
+										<input size="3" disabled id="finalWingsFront" data-bind="value: finalWingsFront" />
 									</td>
 									<td>
-										<input size="3" disabled data-bind="value: finalWingsRear" />
+										<input size="3" disabled id="finalWingsRear" data-bind="value: finalWingsRear" />
 									</td>
 								</tr>
-								<tr>
+								<tr class="suspension">
 									<td>Suspension</td>
 									<td>
-										<input size="3" disabled data-bind="value: finalSuspensionFront" />
+										<input size="3" disabled id="finalSuspensionFront" data-bind="value: finalSuspensionFront" />
 									</td>
 									<td>
-										<input size="3" disabled data-bind="value: finalSuspensionRear" />
+										<input size="3" disabled id="finalSuspensionRear" data-bind="value: finalSuspensionRear" />
 									</td>
 								</tr>
-								<tr>
+								<tr class="antirollbar">
 									<td>Anti-Roll Bar</td>
 									<td>
-										<input size="3" disabled data-bind="value: finalAntiRollBarFront" />
+										<input size="3" disabled id="finalAntiRollBarFront" data-bind="value: finalAntiRollBarFront" />
 									</td>
 									<td>
-										<input size="3" disabled data-bind="value: finalAntiRollBarRear" />
+										<input size="3" disabled id="finalAntiRollBarRear" data-bind="value: finalAntiRollBarRear" />
 									</td>
 								</tr>
-								<tr>
+								<tr class="rideheight">
 									<td>Ride Height</td>
 									<td>
-										<input size="3" disabled data-bind="value: finalRideHeightFront" />
+										<input size="3" disabled id="finalRideHeightFront" data-bind="value: finalRideHeightFront" />
 									</td>
 									<td>
-										<input size="3" disabled data-bind="value: finalRideHeightRear" />
+										<input size="3" disabled id="finalRideHeightRear" data-bind="value: finalRideHeightRear" />
 									</td>
 								</tr>
-								<tr>
+								<tr class="tyrepressure">
 									<td>Tyre pressure</td>
 									<td>
-										<input size="3" disabled data-bind="value: finalTyrePressureFront" />
+										<input size="3" disabled id="finalTyrePressureFront" data-bind="value: finalTyrePressureFront" />
 									</td>
 									<td>
-										<input size="3" disabled data-bind="value: finalTyrePressureRear" />
+										<input size="3" disabled id="finalTyrePressureRear" data-bind="value: finalTyrePressureRear" />
 									</td>
 								</tr>
-								<tr>
+								<tr class="gears">
 									<td>Gears</td>
 									<td>&nbsp;</td>
 									<td>
-										<input size="3" disabled data-bind="value: finalGears" />
+										<input size="3" disabled id="finalGears" data-bind="value: finalGears" />
 									</td>
 								</tr>
-								<tr>
+								<tr class="brakebias">
 									<td>Brake bias</td>
 									<td>&nbsp;</td>
 									<td>
-										<input size="3" disabled data-bind="value: finalBrakeBias" />
+										<input size="3" disabled id="finalBrakeBias" data-bind="value: finalBrakeBias" />
 									</td>
 								</tr>
 							</table>
 						</div>
 					</form>
 				</div>
-			</div>
+
+				<div class="col-md-4">
+					<div class="page-header">
+						<h1>String result</h1>
+					</div>
+					<form class="form">
+						<div id="result" class="form-group">
+	
+						</div>
+					</form>
+				</div>
 			<div class="row">
 				<div class="col-md-4 col-md-offset-4">
 					<form class="form" role="form">
@@ -272,5 +299,90 @@
 		<script type="text/javascript" src="js/bootstrap.min.js"></script>
 		<script type="text/javascript" src="js/knockout-latest.js"></script>
 		<script type="text/javascript" src="js/app.js"></script>
+
+	<script>
+
+		function my_onchange(){
+			var resultString = '';
+			if($('#wings').is(':checked')){
+				resultString += 'Wings<BR>';
+				resultString += $("#finalWingsFront").val()+'<BR>';
+				resultString += $("#finalWingsRear").val()+'<BR>';
+				resultString += '<BR>';
+			}
+			if($('#suspension').is(':checked')){
+				resultString += 'Suspension<BR>';
+				resultString += $("#finalSuspensionFront").val()+'<BR>';
+				resultString += $("#finalSuspensionRear").val()+'<BR>';
+				resultString += '<BR>';
+			}
+			if($('#antiRollBar').is(':checked')){
+				resultString += 'Anti-Roll Bar<BR>';
+				resultString += $("#finalAntiRollBarFront").val()+'<BR>';
+				resultString += $("#finalAntiRollBarRear").val()+'<BR>';
+				resultString += '<BR>';
+			}
+			if($('#rideHeight').is(':checked')){
+				resultString += 'Ride Height<BR>';
+				resultString += $("#finalRideHeightFront").val()+'<BR>';
+				resultString += $("#finalRideHeightRear").val()+'<BR>';
+				resultString += '<BR>';
+			}
+			if($('#tyrePressure').is(':checked')){
+				resultString += 'Tyre pressure<BR>';
+				resultString += $("#finalTyrePressureFront").val()+'<BR>';
+				resultString += $("#finalTyrePressureRear").val()+'<BR>';
+				resultString += '<BR>';
+			}
+			if($('#gears').is(':checked')){
+				resultString += 'Gears<BR>';
+				resultString += $("#finalGears").val()+'<BR>';
+				resultString += '<BR>';
+			}
+			if($('#brakeBias').is(':checked')){
+				resultString += 'Brake bias<BR>';
+				resultString += $("#finalBrakeBias").val()+'<BR>';
+			}
+
+			$('#result').html(resultString);
+		}
+
+		$( document ).ready(function() {
+			$('input:not([type=radio])').change(function(){
+				my_onchange();
+			});
+			$('input[type=radio]').change(function(){
+				setTimeout(function(){my_onchange()},250);
+			});
+			$('select').change(function(){
+				my_onchange();
+			});
+			$('input[type=checkbox]').click(
+				function(){
+					var parentTR = $(this)[0].parentElement.parentElement;
+					var cell2 = $(parentTR)[0].cells[2];
+					var cell3 = $(parentTR)[0].cells[3];
+					var classTR = $(parentTR)[0].classList[0];
+					var classTRfs = $('.'+classTR)[1];
+					
+					if(!$(this).is(':checked')){
+						$(parentTR).addClass('unchecked');
+						$(cell2).attr("disabled", true);
+						$(cell3).attr("disabled", true);
+						$(classTRfs).addClass('unchecked');
+					}else{
+						$(parentTR).removeClass('unchecked');
+						$(cell2).attr("disabled", false);
+						$(cell3).attr("disabled", false);
+						$(classTRfs).removeClass('unchecked');
+					}
+
+				}
+			)
+		});
+
+
+	</script>
+
 	</body>
 </html>

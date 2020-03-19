@@ -14,21 +14,30 @@ function BatracerCalculator () {
   var self = this;
 
   self.weatherConditions = ko.observableArray([
-    new WeatherCondition('Greasy', 0),
-    new WeatherCondition('Bone Dry', 9),
-    new WeatherCondition('Moist', 18),
-    new WeatherCondition('Drizzle', 27),
-    new WeatherCondition('Light Rain', 36),
-    new WeatherCondition('Rain', 45),
-    new WeatherCondition('Wet and Slippery', 54),
-    new WeatherCondition('Steady Rain', 63),
-    new WeatherCondition('Heavy Rain', 72),
-    new WeatherCondition('Treacherous Rain and Spray', 81),
-    new WeatherCondition('Monsoon', 90),
-    new WeatherCondition('Storm', 100)
+	new WeatherCondition('Bone Dry (9)', 9),
+    new WeatherCondition('Greasy (0)', 0),
+    new WeatherCondition('Moist (18)', 18),
+    new WeatherCondition('Drizzle (27)', 27),
+    new WeatherCondition('Light Rain (36)', 36),
+    new WeatherCondition('Rain (45)', 45),
+    new WeatherCondition('Wet and Slippery (54)', 54),
+    new WeatherCondition('Steady Rain (63)', 63),
+    new WeatherCondition('Heavy Rain (72)', 72),
+    new WeatherCondition('Treacherous Rain and Spray (81)', 81),
+    new WeatherCondition('Monsoon (90)', 90),
+    new WeatherCondition('Storm (100)', 100)
   ]);
 
   self.dryToWet = ko.observable('true');
+
+  self.wings = ko.observable('true');
+  self.suspension = ko.observable('true');
+  self.antiRollBar = ko.observable('true');
+  self.rideHeight = ko.observable('true');
+  self.tyrePressure = ko.observable('true');
+  self.gearsI = ko.observable('true');
+  self.brakeBiasI = ko.observable('true');
+
   self.weatherAdjustment = ko.observable(0);
 
   // numbers to enter
@@ -74,9 +83,6 @@ function BatracerCalculator () {
   // calculating adjusted number
   self.adjustNumber = function (setupVal, changeVal) {
 
-	console.log(setupVal);
-
-	/*
 	if (typeof (setupVal) === 'string'){
 		setupVal = setupVal.replace(/\s/g, '');
 		var ind = setupVal.indexOf('-');
@@ -91,12 +97,10 @@ function BatracerCalculator () {
 
 		}
 	}
-	*/
 
     var alterednumber = (changeVal / 100) * self.weatherAdjustment().weatherAdjustment;
 
 	setupVal = parseInt(setupVal, 10);
-	console.log(setupVal);
 
     if (self.dryToWet() === 'true') {
       alterednumber = Math.round(setupVal + alterednumber);
