@@ -110,7 +110,7 @@ function BatracerCalculator () {
 
     if (alterednumber > 100) {
       alterednumber = 100;
-    } else if (alterednumber < 0 || isNaN(alterednumber) || alterednumber === Infinity) {
+    } else if (isNaN(alterednumber) || alterednumber === Infinity) {
       alterednumber = 0;
     }
 
