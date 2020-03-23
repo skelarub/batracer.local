@@ -14,21 +14,19 @@ function BatracerCalculator () {
   var self = this;
 
   self.weatherConditions = ko.observableArray([
-	new WeatherCondition('Bone Dry (9)', 9),
-    new WeatherCondition('Greasy (0)', 0),
-    new WeatherCondition('Moist (18)', 18),
-    new WeatherCondition('Drizzle (27)', 27),
-    new WeatherCondition('Light Rain (36)', 36),
-    new WeatherCondition('Rain (45)', 45),
-    new WeatherCondition('Wet and Slippery (54)', 54),
-    new WeatherCondition('Steady Rain (63)', 63),
-    new WeatherCondition('Heavy Rain (72)', 72),
-    new WeatherCondition('Treacherous Rain and Spray (81)', 81),
-    new WeatherCondition('Monsoon (90)', 90),
-    new WeatherCondition('Storm (100)', 100)
+    new WeatherCondition('Bone Dry (9)', 9, 9, 18),
+    new WeatherCondition('Greasy (0)', 0, 0, 9),
+    new WeatherCondition('Moist (18)', 18, 18, 27),
+    new WeatherCondition('Drizzle (27)', 27, 27, 36),
+    new WeatherCondition('Light Rain (36)', 36, 36, 45),
+    new WeatherCondition('Rain (45)', 45, 45, 54),
+    new WeatherCondition('Wet and Slippery (54)', 54, 54, 63),
+    new WeatherCondition('Steady Rain (63)', 63, 63, 72),
+    new WeatherCondition('Heavy Rain (72)', 72, 72, 81),
+    new WeatherCondition('Treacherous Rain and Spray (81)', 81, 81, 90),
+    new WeatherCondition('Monsoon (90)', 90, 90, 100),
+    new WeatherCondition('Storm (100)', 100, 100, 100)
   ]);
-
-  self.dryToWet = ko.observable('true');
 
   self.wings = ko.observable('true');
   self.suspension = ko.observable('true');
@@ -38,7 +36,31 @@ function BatracerCalculator () {
   self.gearsI = ko.observable('true');
   self.brakeBiasI = ko.observable('true');
 
+  self.results = ko.observable('');
+
+  self.dryToWet = ko.observable('true');
+
   self.weatherAdjustment = ko.observable(0);
+  self.specification = ko.observable(0);
+  self.range = ko.observable(0);
+  self.rangeMin = ko.observable(0);
+  self.rangeMax = ko.observable(0);
+  self.tmpValue = ko.observable(0);
+
+  self.weatherAdjustment.subscribe( function (newValue){
+    self.specification(newValue.weatherAdjustment);
+  });
+  
+  self.specification.subscribe( function (newValue){
+    self.range(newValue);
+  });
+
+  self.range.subscribe( function (newValue){
+    self.specification(newValue);
+    self.rangeMin(self.weatherAdjustment().rangeMin);
+    self.rangeMax(self.weatherAdjustment().rangeMax);
+    self.tmpValue(new WeatherCondition('newValue', parseInt(newValue, 10)));
+  });
 
   // numbers to enter
   self.wingsFront = ko.observable(0);
@@ -83,24 +105,24 @@ function BatracerCalculator () {
   // calculating adjusted number
   self.adjustNumber = function (setupVal, changeVal) {
 
-	if (typeof (setupVal) === 'string'){
-		setupVal = setupVal.replace(/\s/g, '');
-		var ind = setupVal.indexOf('-');
-		
-		if (ind > -1 && ind != 0){
+    if (typeof (setupVal) === 'string'){
+      setupVal = setupVal.replace(/\s/g, '');
+      var ind = setupVal.indexOf('-');
 
-			var tmpArr = setupVal.split('-');
-			var one = self.adjustNumber(tmpArr[0], changeVal);
-			var two = self.adjustNumber(tmpArr[1], changeVal);
+      if (ind > -1 && ind != 0){
 
-			return one + '-' + two;
+        var tmpArr = setupVal.split('-');
+        var one = self.adjustNumber(tmpArr[0], changeVal);
+        var two = self.adjustNumber(tmpArr[1], changeVal);
 
-		}
-	}
+        return one + '-' + two;
 
-    var alterednumber = (changeVal / 100) * self.weatherAdjustment().weatherAdjustment;
+      }
+    }
 
-	setupVal = parseInt(setupVal, 10);
+    var alterednumber = (changeVal / 100) * self.tmpValue().weatherAdjustment;
+
+    setupVal = parseInt(setupVal, 10);
 
     if (self.dryToWet() === 'true') {
       alterednumber = Math.round(setupVal + alterednumber);
@@ -108,79 +130,64 @@ function BatracerCalculator () {
       alterednumber = Math.round(setupVal - alterednumber);
     }
 
-    if (alterednumber > 100) {
-      alterednumber = 100;
-    } else if (isNaN(alterednumber) || alterednumber === Infinity) {
-      alterednumber = 0;
-    }
-
     return alterednumber;
   };
 
   // final calculated numbers
   self.finalWingsFront = ko.computed(function () {
-    var value = self.adjustNumber(self.wingsFront(), self.adjustWingsFront());
-    return value;
+    return self.adjustNumber(self.wingsFront(), self.adjustWingsFront());
   });
 
   self.finalWingsRear = ko.computed(function () {
-    var value = self.adjustNumber(self.wingsRear(), self.adjustWingsRear());
-    return value;
+    return self.adjustNumber(self.wingsRear(), self.adjustWingsRear());
   });
 
   self.finalSuspensionFront = ko.computed(function () {
-    var value = self.adjustNumber(self.suspensionFront(), self.adjustSuspensionFront());
-    return value;
+    return self.adjustNumber(self.suspensionFront(), self.adjustSuspensionFront());
   });
 
   self.finalSuspensionRear = ko.computed(function () {
-    var value = self.adjustNumber(self.suspensionRear(), self.adjustSuspensionRear());
-    return value;
+    return self.adjustNumber(self.suspensionRear(), self.adjustSuspensionRear());
   });
 
   self.finalAntiRollBarFront = ko.computed(function () {
-    var value = self.adjustNumber(self.antiRollBarFront(), self.adjustAntiRollBarFront());
-    return value;
+    return self.adjustNumber(self.antiRollBarFront(), self.adjustAntiRollBarFront());
   });
 
   self.finalAntiRollBarRear = ko.computed(function () {
-    var value = self.adjustNumber(self.antiRollBarRear(), self.adjustAntiRollBarRear());
-    return value;
+    return self.adjustNumber(self.antiRollBarRear(), self.adjustAntiRollBarRear());
   });
 
   self.finalRideHeightFront = ko.computed(function () {
-    var value = self.adjustNumber(self.rideHeightFront(), self.adjustRideHeightFront());
-    return value;
+    return self.adjustNumber(self.rideHeightFront(), self.adjustRideHeightFront());
   });
 
   self.finalRideHeightRear = ko.computed(function () {
-    var value = self.adjustNumber(self.rideHeightRear(), self.adjustRideHeightRear());
-    return value;
+    return self.adjustNumber(self.rideHeightRear(), self.adjustRideHeightRear());
   });
 
   self.finalTyrePressureFront = ko.computed(function () {
-    var value = self.adjustNumber(self.tyrePressureFront(), self.adjustTyrePressureFront());
-    return value;
+    return self.adjustNumber(self.tyrePressureFront(), self.adjustTyrePressureFront());
   });
 
   self.finalTyrePressureRear = ko.computed(function () {
-    var value = self.adjustNumber(self.tyrePressureRear(), self.adjustTyrePressureRear());
-    return value;
+    return self.adjustNumber(self.tyrePressureRear(), self.adjustTyrePressureRear());
   });
 
   self.finalGears = ko.computed(function () {
-    var value = self.adjustNumber(self.gears(), self.adjustGears());
-    return value;
+    return self.adjustNumber(self.gears(), self.adjustGears());
   });
 
   self.finalBrakeBias = ko.computed(function () {
-    var value = self.adjustNumber(self.brakeBias(), self.adjustBrakeBias());
-    return value;
+    return self.adjustNumber(self.brakeBias(), self.adjustBrakeBias());
   });
+
 }
 
-function WeatherCondition(key, value) {
+function WeatherCondition (key, value, min, max) {
   'use strict';
   this.displayName = key;
   this.weatherAdjustment = value;
+  this.rangeMin = min;
+  this.rangeMax = max;
 }
