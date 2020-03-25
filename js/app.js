@@ -110,7 +110,7 @@ function BatracerCalculator () {
     });
   });
 
-  // if you select a value from the drop-down list, we change the value in the specification
+  // if select a value from the drop-down list, change the value in the specification
   self.weatherAdjustment.subscribe(function (newValue){
     self.specification(newValue.weatherAdjustment);
   });
