@@ -13,6 +13,7 @@ function BatracerCalculator () {
 
   var self = this;
 
+  // starting values
   self.weatherConditions = ko.observableArray([
     new WeatherCondition('Bone Dry (0)', 0),
     new WeatherCondition('Greasy (9)', 9),
@@ -56,9 +57,9 @@ function BatracerCalculator () {
   self.rangeMax = ko.observable(self.weatherAdjustment().rangeMax);
   self.tmpValue = ko.observable(self.weatherAdjustment());
 
+  // sort the inserted text
   self.myScriptPaste.subscribe(function (newValue){
     var arraySetup = newValue.split('\n');
-    var currentName = '';
 
     self.wings(false);
     self.suspension(false);
@@ -107,17 +108,19 @@ function BatracerCalculator () {
         }
       }
     });
-    
   });
 
+  // if you select a value from the drop-down list, we change the value in the specification
   self.weatherAdjustment.subscribe(function (newValue){
     self.specification(newValue.weatherAdjustment);
   });
   
+  // if the value is changed specification, then set value in the range
   self.specification.subscribe(function (newValue){
     self.range(newValue);
   });
 
+  // at change range
   self.range.subscribe(function (newValue){
     self.specification(newValue);
     self.rangeMin(self.weatherAdjustment().rangeMin);
@@ -129,41 +132,29 @@ function BatracerCalculator () {
   // numbers to enter
   self.wingsFront = ko.observable(0);
   self.wingsRear = ko.observable(0);
-
   self.suspensionFront = ko.observable(0);
   self.suspensionRear = ko.observable(0);
-
   self.antiRollBarFront = ko.observable(0);
   self.antiRollBarRear = ko.observable(0);
-
   self.rideHeightFront = ko.observable(0);
   self.rideHeightRear = ko.observable(0);
-
   self.tyrePressureFront = ko.observable(0);
   self.tyrePressureRear = ko.observable(0);
-
   self.gears = ko.observable(0);
-
   self.brakeBias = ko.observable(0);
 
   // numbers for adjusting
   self.adjustWingsFront = ko.observable(20);
   self.adjustWingsRear = ko.observable(35);
-
   self.adjustSuspensionFront = ko.observable(-20);
   self.adjustSuspensionRear = ko.observable(-35);
-
   self.adjustAntiRollBarFront = ko.observable(-18);
   self.adjustAntiRollBarRear = ko.observable(-30);
-
   self.adjustRideHeightFront = ko.observable(12);
   self.adjustRideHeightRear = ko.observable(14);
-
   self.adjustTyrePressureFront = ko.observable(10);
   self.adjustTyrePressureRear = ko.observable(12);
-
   self.adjustGears = ko.observable(-5);
-
   self.adjustBrakeBias = ko.observable(15);
 
   // calculating adjusted number
@@ -197,6 +188,7 @@ function BatracerCalculator () {
     return alterednumber;
   };
 
+  // remove minus and fit a limits
   self.removeminus = function (numberM) {
     if (numberM > 100) {
       numberM = 100;
@@ -207,6 +199,7 @@ function BatracerCalculator () {
     return numberM;
   }
 
+  // define range or number
   self.getValue = function (alterednumber) {
     if (typeof (alterednumber) === 'string'){
       alterednumber = alterednumber.replace(/\s/g, '');
@@ -238,6 +231,7 @@ function BatracerCalculator () {
     return alterednumber;
   }
 
+  // collect at line
   self.collectResultString = function (){
     var resultString = '';
 
@@ -248,6 +242,7 @@ function BatracerCalculator () {
       self.uncheckedWings('');
       resultString += 'Wings<BR>' + self.getValue(self.finalWingsFront()) + '<BR>' + self.getValue(self.finalWingsRear()) + '<BR><BR>';
     } else {self.uncheckedWings('unchecked');}
+    
     if (self.suspension()){
       self.uncheckedSuspension('');
       resultString += 'Suspension<BR>' + self.getValue(self.finalSuspensionFront()) + '<BR>' + self.getValue(self.finalSuspensionRear()) + '<BR><BR>';
@@ -283,117 +278,39 @@ function BatracerCalculator () {
   }
 
   // final calculated numbers
-  self.finalWingsFront = ko.computed(function () {
-    return self.adjustNumber(self.wingsFront(), self.adjustWingsFront());
+  var objTmp = {
+    'finalWingsFront': { 'one': 'wingsFront', 'two': 'adjustWingsFront' },
+    'finalWingsRear': { 'one': 'wingsRear', 'two': 'adjustWingsRear' },
+    'finalSuspensionFront': { 'one': 'suspensionFront', 'two': 'adjustSuspensionFront' },
+    'finalSuspensionRear': { 'one': 'suspensionRear', 'two': 'adjustSuspensionRear' },
+    'finalAntiRollBarFront': { 'one': 'antiRollBarFront', 'two': 'adjustAntiRollBarFront' },
+    'finalAntiRollBarRear': { 'one': 'antiRollBarRear', 'two': 'adjustAntiRollBarRear' },
+    'finalRideHeightFront': { 'one': 'rideHeightFront', 'two': 'adjustRideHeightFront' },
+    'finalRideHeightRear': { 'one': 'rideHeightRear', 'two': 'adjustRideHeightRear' },
+    'finalTyrePressureFront': { 'one': 'tyrePressureFront', 'two': 'adjustTyrePressureFront' },
+    'finalTyrePressureRear': { 'one': 'tyrePressureRear', 'two': 'adjustTyrePressureRear' },
+    'finalGears': { 'one': 'gears', 'two': 'adjustGears' },
+    'finalBrakeBias': { 'one': 'brakeBias', 'two': 'adjustBrakeBias' }
+  }
+  Object.keys(objTmp).map(function (objectKey) {
+    var item = objTmp[objectKey];
+    self[objectKey] = ko.computed(function () {
+      return self.adjustNumber(self[item.one](), self[item.two]());
+    });
   });
 
-  self.finalWingsRear = ko.computed(function () {
-    return self.adjustNumber(self.wingsRear(), self.adjustWingsRear());
+  // sign function collectResultString to change variables
+  var arrTmp = ['wings', 'suspension', 'antiRollBar', 'rideHeight', 'tyrePressure', 'gearsI', 'brakeBiasI', 'dryToWet', 'wingsFront', 'wingsRear', 'suspensionFront', 'suspensionRear',
+  'antiRollBarFront', 'antiRollBarRear', 'rideHeightFront', 'rideHeightRear', 'tyrePressureFront', 'tyrePressureRear', 'gears', 'brakeBias'];
+  arrTmp.forEach(function (item){
+    self[item].subscribe(function (){
+      self.collectResultString();
+    });
   });
-
-  self.finalSuspensionFront = ko.computed(function () {
-    return self.adjustNumber(self.suspensionFront(), self.adjustSuspensionFront());
-  });
-
-  self.finalSuspensionRear = ko.computed(function () {
-    return self.adjustNumber(self.suspensionRear(), self.adjustSuspensionRear());
-  });
-
-  self.finalAntiRollBarFront = ko.computed(function () {
-    return self.adjustNumber(self.antiRollBarFront(), self.adjustAntiRollBarFront());
-  });
-
-  self.finalAntiRollBarRear = ko.computed(function () {
-    return self.adjustNumber(self.antiRollBarRear(), self.adjustAntiRollBarRear());
-  });
-
-  self.finalRideHeightFront = ko.computed(function () {
-    return self.adjustNumber(self.rideHeightFront(), self.adjustRideHeightFront());
-  });
-
-  self.finalRideHeightRear = ko.computed(function () {
-    return self.adjustNumber(self.rideHeightRear(), self.adjustRideHeightRear());
-  });
-
-  self.finalTyrePressureFront = ko.computed(function () {
-    return self.adjustNumber(self.tyrePressureFront(), self.adjustTyrePressureFront());
-  });
-
-  self.finalTyrePressureRear = ko.computed(function () {
-    return self.adjustNumber(self.tyrePressureRear(), self.adjustTyrePressureRear());
-  });
-
-  self.finalGears = ko.computed(function () {
-    return self.adjustNumber(self.gears(), self.adjustGears());
-  });
-
-  self.finalBrakeBias = ko.computed(function () {
-    return self.adjustNumber(self.brakeBias(), self.adjustBrakeBias());
-  });
-
-  self.wings.subscribe(function (){
-    self.collectResultString();
-  });
-  self.suspension.subscribe(function (){
-    self.collectResultString();
-  });
-  self.antiRollBar.subscribe(function (){
-    self.collectResultString();
-  });
-  self.rideHeight.subscribe(function (){
-    self.collectResultString();
-  });
-  self.tyrePressure.subscribe(function (){
-    self.collectResultString();
-  });
-  self.gearsI.subscribe(function (){
-    self.collectResultString();
-  });
-  self.brakeBiasI.subscribe(function (){
-    self.collectResultString();
-  });
-  self.dryToWet.subscribe(function (){
-    self.collectResultString();
-  });
-  self.wingsFront.subscribe(function (){
-    self.collectResultString();
-  });
-  self.wingsRear.subscribe(function (){
-    self.collectResultString();
-  });;
-  self.suspensionFront.subscribe(function (){
-    self.collectResultString();
-  });;
-  self.suspensionRear.subscribe(function (){
-    self.collectResultString();
-  });;
-  self.antiRollBarFront.subscribe(function (){
-    self.collectResultString();
-  });;
-  self.antiRollBarRear.subscribe(function (){
-    self.collectResultString();
-  });;
-  self.rideHeightFront.subscribe(function (){
-    self.collectResultString();
-  });;
-  self.rideHeightRear.subscribe(function (){
-    self.collectResultString();
-  });;
-  self.tyrePressureFront.subscribe(function (){
-    self.collectResultString();
-  });;
-  self.tyrePressureRear.subscribe(function (){
-    self.collectResultString();
-  });;
-  self.gears.subscribe(function (){
-    self.collectResultString();
-  });;
-  self.brakeBias.subscribe(function (){
-    self.collectResultString();
-  });;
 
 }
 
+// form an object
 function WeatherCondition (key, value) {
   'use strict';
   this.displayName = key;
