@@ -164,7 +164,7 @@ function BatracerCalculator () {
   self.adjustTyrePressureRear = ko.observable(12);
   self.adjustGears = ko.observable(-5);
   self.adjustBrakeBias = ko.observable(15);
-  self.adjustWheelStagerDifferential = ko.observable(10); // тут требуемый параметр вместо нуля
+  self.adjustWheelStagerDifferential = ko.observable(0); // тут требуемый параметр вместо нуля
 
   // calculating adjusted number
   self.adjustNumber = function (setupVal, changeVal) {
