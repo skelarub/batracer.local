@@ -1,425 +1,459 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8">
-		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-		<meta name="viewport" content="width=device-width, initial-scale=1">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-		<title>Batracer Set up adjuster VSK version</title>
-		<link rel="stylesheet" href="css/bootstrap.min.css">
-		<style>
-			.container{
-				width:100% !important;
-			}
-			.unchecked{
-				display:none;
-				background-color: #ddd;
-			}
-			.unchecked td{
-				border:1px solid #fff !important;
+    <title>Batracer Set up adjuster VSK version</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <style>
+      .container{
+        width:100% !important;
+      }
+      .unchecked{
+        display:none;
+        background-color: #ddd;
+      }
+      .unchecked td{
+        border:1px solid #fff !important;
 
-			}
-			.wrap,.range{
-				display:flex;
-			}
-			.second{
-				margin-left:1rem;
-			}
-			.range{
-				width:100%;
-				justify-content:space-between;
-				margin-top:1rem;
-			}
-			.inputRange{
-				width:80%;
-			}
-			#result,#myScriptPaste{
-				min-height:53rem;
-			}
-			#myScriptPaste{
-				border:1px solid #ddd;
-				width:100%;
-			}
+      }
+      .wrap,.range{
+        display:flex;
+      }
+      .second{
+        margin-left:1rem;
+      }
+      .range{
+        width:100%;
+        justify-content:space-between;
+        margin-top:1rem;
+      }
+      .inputRange{
+        width:80%;
+      }
+      #result,#myScriptPaste{
+        min-height:53rem;
+      }
+      #myScriptPaste{
+        border:1px solid #ddd;
+        width:100%;
+      }
 
-		</style>
-	</head>
+    </style>
+  </head>
 
-	<body><h1>VSK weather tool v.03</h1>
-		<div class="container">
-			<div class="row">
-				<div class="col-md-3">
-					<div class="page-header">
-						<h1>Team talk input</h1>
-					</div>
-					<form class="form" role="form">
-						<div class="form-group" >
-							<textarea id="myScriptPaste" data-bind="value: myScriptPaste"></textarea>
-						</div>
-					</form>
-				</div>
+  <body><h1>VSK weather tool v.03</h1>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-3">
+          <div class="page-header">
+            <h1>Team talk input</h1>
+          </div>
+          <form class="form" role="form">
+            <div class="form-group" >
+              <textarea id="myScriptPaste" data-bind="value: myScriptPaste"></textarea>
+            </div>
+          </form>
+        </div>
 
-				<div class="col-md-3">
-					<div class="page-header">
-						<h1>Current car setup</h1>
-					</div>
-					<form class="form" role="form">
-						<div class="form-group">
-							<table id="main" class="table table-bordered table-hover table-condensed">
-								<tr>
-									<th>&nbsp;</th>
-									<th>&nbsp;</th>
-									<th>&nbsp;</th>
-									<th>&nbsp;</th>
-								</tr>
-								<tr class="wings" data-bind="class: uncheckedWings">
-									<td rowspan=2><input type="checkbox" id="wings" name="wings" data-bind="checked: wings" /></td>
-									<td rowspan=2>Wings</td>
-									<td>Front</td>
-									<td>
-										<input size="3" data-bind="value: wingsFront">
-									</td>
-								</tr>
-								<tr data-bind="class: uncheckedWings">
-									<td>Rear</td>
-									<td>
-										<input size="3" data-bind="value: wingsRear">
-									</td>
-								</tr>
-								<tr class="suspension" data-bind="class: uncheckedSuspension">
-									<td rowspan=2><input type="checkbox" id="suspension" name="suspension" value="true" data-bind="checked: suspension" /></td>
-									<td rowspan=2>Suspension</td>
-									<td>Front</td>
-									<td>
-										<input size="3" data-bind="value: suspensionFront">
-									</td>
-								</tr>
-								<tr data-bind="class: uncheckedSuspension">
-									<td>Rear</td>
-									<td>
-										<input size="3" data-bind="value: suspensionRear">
-									</td>
-								</tr>
-								<tr class="antirollbar" data-bind="class: uncheckedAntiRollBar">
-									<td rowspan=2><input type="checkbox" id="antiRollBar" name="antiRollBar" value="true" data-bind="checked: antiRollBar" /></td>
-									<td rowspan=2>Anti-Roll Bar</td>
-									<td>Front</td>
-									<td>
-										<input size="3" data-bind="value: antiRollBarFront">
-									</td>
-								</tr>
-								<tr data-bind="class: uncheckedAntiRollBar">
-									<td>Rear</td>
-									<td>
-										<input size="3" data-bind="value: antiRollBarRear">
-									</td>
-								</tr>
-								<tr class="rideheight" data-bind="class: uncheckedRideHeight">
-									<td rowspan=2><input type="checkbox" id="rideHeight" name="rideHeight" value="true" data-bind="checked: rideHeight" /></td>
-									<td rowspan=2>Ride Height</td>
-									<td>Front</td>
-									<td>
-										<input size="3" data-bind="value: rideHeightFront">
-									</td>
-								</tr>
-								<tr data-bind="class: uncheckedRideHeight">
-									<td>Rear</td>
-									<td>
-										<input size="3" data-bind="value: rideHeightRear">
-									</td>
-								</tr>
-								<tr class="tyrepressure" data-bind="class: uncheckedTyrePressure">
-									<td rowspan=2><input type="checkbox" id="tyrePressure" name="tyrePressure" value="true" data-bind="checked: tyrePressure" /></td rowspan=2>
-									<td rowspan=2>Tyre pressure</td rowspan=2>
-									<td>Front</td>
-									<td>
-										<input size="3" data-bind="value: tyrePressureFront">
-									</td>
-								</tr>
-								<tr data-bind="class: uncheckedTyrePressure">
-									<td>Rear</td>
-									<td>
-										<input size="3" data-bind="value: tyrePressureRear">
-									</td>
-								</tr>
-								<tr class="gears" data-bind="class: uncheckedGears">
-									<td><input type="checkbox" id="gears" name="gears" value="true" data-bind="checked: gearsI" /></td>
-									<td>Gears</td>
-									<td>&nbsp;</td>
-									<td>
-										<input size="3" data-bind="value: gears">
-									</td>
-								</tr>
-								<tr style="display:none;">
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-								</tr>
-								<tr class="brakebias" data-bind="class: uncheckedBrakeBias">
-									<td><input type="checkbox" id="brakeBias" name="brakeBias" value="true" data-bind="checked: brakeBiasI" /></td>
-									<td>Brake bias</td>
-									<td>&nbsp;</td>
-									<td>
-										<input size="3" data-bind="value: brakeBias">
-									</td>
-								</tr>
-								<tr style="display:none;">
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-								</tr>
-							</table>
-						</div>
-					</form>
-				</div>
+        <div class="col-md-3">
+          <div class="page-header">
+            <h1>Current car setup</h1>
+          </div>
+          <form class="form" role="form">
+            <div class="form-group">
+              <table id="main" class="table table-bordered table-hover table-condensed">
+                <tr>
+                  <th>&nbsp;</th>
+                  <th>&nbsp;</th>
+                  <th>&nbsp;</th>
+                  <th>&nbsp;</th>
+                </tr>
+                <tr class="wings" data-bind="class: uncheckedWings">
+                  <td rowspan=2><input type="checkbox" id="wings" name="wings" data-bind="checked: wings" /></td>
+                  <td rowspan=2>Wings</td>
+                  <td>Front</td>
+                  <td>
+                    <input size="3" data-bind="value: wingsFront">
+                  </td>
+                </tr>
+                <tr data-bind="class: uncheckedWings">
+                  <td>Rear</td>
+                  <td>
+                    <input size="3" data-bind="value: wingsRear">
+                  </td>
+                </tr>
+                <tr class="suspension" data-bind="class: uncheckedSuspension">
+                  <td rowspan=2><input type="checkbox" id="suspension" name="suspension" value="true" data-bind="checked: suspension" /></td>
+                  <td rowspan=2>Suspension</td>
+                  <td>Front</td>
+                  <td>
+                    <input size="3" data-bind="value: suspensionFront">
+                  </td>
+                </tr>
+                <tr data-bind="class: uncheckedSuspension">
+                  <td>Rear</td>
+                  <td>
+                    <input size="3" data-bind="value: suspensionRear">
+                  </td>
+                </tr>
+                <tr class="antirollbar" data-bind="class: uncheckedAntiRollBar">
+                  <td rowspan=2><input type="checkbox" id="antiRollBar" name="antiRollBar" value="true" data-bind="checked: antiRollBar" /></td>
+                  <td rowspan=2>Anti-Roll Bar</td>
+                  <td>Front</td>
+                  <td>
+                    <input size="3" data-bind="value: antiRollBarFront">
+                  </td>
+                </tr>
+                <tr data-bind="class: uncheckedAntiRollBar">
+                  <td>Rear</td>
+                  <td>
+                    <input size="3" data-bind="value: antiRollBarRear">
+                  </td>
+                </tr>
+                <tr class="rideheight" data-bind="class: uncheckedRideHeight">
+                  <td rowspan=2><input type="checkbox" id="rideHeight" name="rideHeight" value="true" data-bind="checked: rideHeight" /></td>
+                  <td rowspan=2>Ride Height</td>
+                  <td>Front</td>
+                  <td>
+                    <input size="3" data-bind="value: rideHeightFront">
+                  </td>
+                </tr>
+                <tr data-bind="class: uncheckedRideHeight">
+                  <td>Rear</td>
+                  <td>
+                    <input size="3" data-bind="value: rideHeightRear">
+                  </td>
+                </tr>
+                <tr class="tyrepressure" data-bind="class: uncheckedTyrePressure">
+                  <td rowspan=2><input type="checkbox" id="tyrePressure" name="tyrePressure" value="true" data-bind="checked: tyrePressure" /></td rowspan=2>
+                  <td rowspan=2>Tyre pressure</td rowspan=2>
+                  <td>Front</td>
+                  <td>
+                    <input size="3" data-bind="value: tyrePressureFront">
+                  </td>
+                </tr>
+                <tr data-bind="class: uncheckedTyrePressure">
+                  <td>Rear</td>
+                  <td>
+                    <input size="3" data-bind="value: tyrePressureRear">
+                  </td>
+                </tr>
+                <tr class="gears" data-bind="class: uncheckedGears">
+                  <td><input type="checkbox" id="gears" name="gears" value="true" data-bind="checked: gearsI" /></td>
+                  <td>Gears</td>
+                  <td>&nbsp;</td>
+                  <td>
+                    <input size="3" data-bind="value: gears">
+                  </td>
+                </tr>
+                <tr style="display:none;">
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr class="brakebias" data-bind="class: uncheckedBrakeBias">
+                  <td><input type="checkbox" id="brakeBias" name="brakeBias" value="true" data-bind="checked: brakeBiasI" /></td>
+                  <td>Brake bias</td>
+                  <td>&nbsp;</td>
+                  <td>
+                    <input size="3" data-bind="value: brakeBias">
+                  </td>
+                </tr>
+                <tr style="display:none;">
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr class="wheelstagerdifferential" data-bind="class: uncheckedWheelStagerDifferential">
+                  <td><input type="checkbox" id="wheelStagerDifferential" name="wheelStagerDifferential" value="true" data-bind="checked: wheelStagerDifferentialI" /></td>
+                  <td>Wheel Stager / Differential</td>
+                  <td>&nbsp;</td>
+                  <td>
+                    <input size="3" data-bind="value: wheelStagerDifferential">
+                  </td>
+                </tr>
+                <tr style="display:none;">
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+              </table>
+            </div>
+          </form>
+        </div>
 
-				<div class="col-md-3" style="display:none;">
-					<div class="page-header">
-						<h1>Setup changes</h1>
-					</div>
-					<form class="form" role="form">
-						<div class="form-group">
-							<table class="table table-bordered table-hover table-condensed">
-								<tr>
-									<th>&nbsp;</th>
-									<th>Front</th>
-									<th>Rear</th>
-								</tr>
-								<tr>
-									<td>Wings</td>
-									<td>
-										<input size="3" data-bind="value: adjustWingsFront">
-									</td>
-									<td>
-										<input size="3" data-bind="value: adjustWingsRear">
-									</td>
-								</tr>
-								<tr>
-									<td>Suspension</td>
-									<td>
-										<input size="3" data-bind="value: adjustSuspensionFront">
-									</td>
-									<td>
-										<input size="3" data-bind="value: adjustSuspensionRear">
-									</td>
-								</tr>
-								<tr>
-									<td>Anti-Roll Bar</td>
-									<td>
-										<input size="3" data-bind="value: adjustAntiRollBarFront">
-									</td>
-									<td>
-										<input size="3" data-bind="value: adjustAntiRollBarRear">
-									</td>
-								</tr>
-								<tr>
-									<td>Ride Height</td>
-									<td>
-										<input size="3" data-bind="value: adjustRideHeightFront">
-									</td>
-									<td>
-										<input size="3" data-bind="value: adjustRideHeightRear">
-									</td>
-								</tr>
-								<tr>
-									<td>Tyre pressure</td>
-									<td>
-										<input size="3" data-bind="value: adjustTyrePressureFront">
-									</td>
-									<td>
-										<input size="3" data-bind="value: adjustTyrePressureRear">
-									</td>
-								</tr>
-								<tr>
-									<td>Gears</td>
-									<td>&nbsp;</td>
-									<td>
-										<input size="3" data-bind="value: adjustGears">
-									</td>
-								</tr>
-								<tr>
-									<td>Brake bias</td>
-									<td>&nbsp;</td>
-									<td>
-										<input size="3" data-bind="value: adjustBrakeBias">
-									</td>
-								</tr>
-							</table>
-						</div>
-					</form>
-				</div>
+        <div class="col-md-3" style="display:none;">
+          <div class="page-header">
+            <h1>Setup changes</h1>
+          </div>
+          <form class="form" role="form">
+            <div class="form-group">
+              <table class="table table-bordered table-hover table-condensed">
+                <tr>
+                  <th>&nbsp;</th>
+                  <th>Front</th>
+                  <th>Rear</th>
+                </tr>
+                <tr>
+                  <td>Wings</td>
+                  <td>
+                    <input size="3" data-bind="value: adjustWingsFront">
+                  </td>
+                  <td>
+                    <input size="3" data-bind="value: adjustWingsRear">
+                  </td>
+                </tr>
+                <tr>
+                  <td>Suspension</td>
+                  <td>
+                    <input size="3" data-bind="value: adjustSuspensionFront">
+                  </td>
+                  <td>
+                    <input size="3" data-bind="value: adjustSuspensionRear">
+                  </td>
+                </tr>
+                <tr>
+                  <td>Anti-Roll Bar</td>
+                  <td>
+                    <input size="3" data-bind="value: adjustAntiRollBarFront">
+                  </td>
+                  <td>
+                    <input size="3" data-bind="value: adjustAntiRollBarRear">
+                  </td>
+                </tr>
+                <tr>
+                  <td>Ride Height</td>
+                  <td>
+                    <input size="3" data-bind="value: adjustRideHeightFront">
+                  </td>
+                  <td>
+                    <input size="3" data-bind="value: adjustRideHeightRear">
+                  </td>
+                </tr>
+                <tr>
+                  <td>Tyre pressure</td>
+                  <td>
+                    <input size="3" data-bind="value: adjustTyrePressureFront">
+                  </td>
+                  <td>
+                    <input size="3" data-bind="value: adjustTyrePressureRear">
+                  </td>
+                </tr>
+                <tr>
+                  <td>Gears</td>
+                  <td>&nbsp;</td>
+                  <td>
+                    <input size="3" data-bind="value: adjustGears">
+                  </td>
+                </tr>
+                <tr>
+                  <td>Brake bias</td>
+                  <td>&nbsp;</td>
+                  <td>
+                    <input size="3" data-bind="value: adjustBrakeBias">
+                  </td>
+                </tr>
+                <tr>
+                  <td>Wheel Stager / Differential</td>
+                  <td>&nbsp;</td>
+                  <td>
+                    <input size="3" data-bind="value: adjustWheelStagerDifferential">
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </form>
+        </div>
 
-				<div class="col-md-3">
-					<div class="page-header">
-						<h1>Converted setup</h1>
-					</div>
-					<form class="form" role="form">
-						<div class="form-group">
-							<table class="table table-bordered table-hover table-condensed">
-								<tr>
-									<th>&nbsp;</th>
-									<th>&nbsp;</th>
-									<th>&nbsp;</th>
-								</tr>
-								<tr class="wings" data-bind="class: uncheckedWings">
-									<td rowspan=2>Wings</td>
-									<td>Front</td>
-									<td>
-										<input size="3" disabled id="finalWingsFront" data-bind="value: finalWingsFront" />
-									</td>
-								</tr>
-								<tr data-bind="class: uncheckedWings">
-									<td>Rear</td>
-									<td>
-										<input size="3" disabled id="finalWingsRear" data-bind="value: finalWingsRear" />
-									</td>
-								</tr>
-								<tr class="suspension" data-bind="class: uncheckedSuspension">
-									<td rowspan=2>Suspension</td>
-									<td>Front</td>
-									<td>
-										<input size="3" disabled id="finalSuspensionFront" data-bind="value: finalSuspensionFront" />
-									</td>
-								</tr>
-								<tr data-bind="class: uncheckedSuspension">
-									<td>Rear</td>
-									<td>
-										<input size="3" disabled id="finalSuspensionRear" data-bind="value: finalSuspensionRear" />
-									</td>
-								</tr>
-								<tr class="antirollbar" data-bind="class: uncheckedAntiRollBar">
-									<td rowspan=2>Anti-Roll Bar</td>
-									<td>Front</td>
-									<td>
-										<input size="3" disabled id="finalAntiRollBarFront" data-bind="value: finalAntiRollBarFront" />
-									</td>
-								</tr>
-								<tr data-bind="class: uncheckedAntiRollBar">
-									<td>Rear</td>
-									<td>
-										<input size="3" disabled id="finalAntiRollBarRear" data-bind="value: finalAntiRollBarRear" />
-									</td>
-								</tr>
-								<tr class="rideheight" data-bind="class: uncheckedRideHeight">
-									<td rowspan=2>Ride Height</td>
-									<td>Front</td>
-									<td>
-										<input size="3" disabled id="finalRideHeightFront" data-bind="value: finalRideHeightFront" />
-									</td>
-								</tr>
-								<tr data-bind="class: uncheckedRideHeight">
-									<td>Rear</td>
-									<td>
-										<input size="3" disabled id="finalRideHeightRear" data-bind="value: finalRideHeightRear" />
-									</td>
-								</tr>
-								<tr class="tyrepressure" data-bind="class: uncheckedTyrePressure">
-									<td rowspan=2>Tyre pressure</td>
-									<td>Front</td>
-									<td>
-										<input size="3" disabled id="finalTyrePressureFront" data-bind="value: finalTyrePressureFront" />
-									</td>
-								</tr>
-								<tr data-bind="class: uncheckedTyrePressure">
-									<td>Rear</td>
-									<td>
-										<input size="3" disabled id="finalTyrePressureRear" data-bind="value: finalTyrePressureRear" />
-									</td>
-								</tr>
-								<tr class="gears" data-bind="class: uncheckedGears">
-									<td>Gears</td>
-									<td>&nbsp;</td>
-									<td>
-										<input size="3" disabled id="finalGears" data-bind="value: finalGears" />
-									</td>
-								</tr>
-								<tr style="display:none;">
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-								</tr>
-								<tr class="brakebias" data-bind="class: uncheckedBrakeBias">
-									<td>Brake bias</td>
-									<td>&nbsp;</td>
-									<td>
-										<input size="3" disabled id="finalBrakeBias" data-bind="value: finalBrakeBias" />
-									</td>
-								</tr>
-								<tr style="display:none;">
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-								</tr>
-							</table>
-						</div>
-					</form>
-				</div>
+        <div class="col-md-3">
+          <div class="page-header">
+            <h1>Converted setup</h1>
+          </div>
+          <form class="form" role="form">
+            <div class="form-group">
+              <table class="table table-bordered table-hover table-condensed">
+                <tr>
+                  <th>&nbsp;</th>
+                  <th>&nbsp;</th>
+                  <th>&nbsp;</th>
+                </tr>
+                <tr class="wings" data-bind="class: uncheckedWings">
+                  <td rowspan=2>Wings</td>
+                  <td>Front</td>
+                  <td>
+                    <input size="3" disabled id="finalWingsFront" data-bind="value: finalWingsFront" />
+                  </td>
+                </tr>
+                <tr data-bind="class: uncheckedWings">
+                  <td>Rear</td>
+                  <td>
+                    <input size="3" disabled id="finalWingsRear" data-bind="value: finalWingsRear" />
+                  </td>
+                </tr>
+                <tr class="suspension" data-bind="class: uncheckedSuspension">
+                  <td rowspan=2>Suspension</td>
+                  <td>Front</td>
+                  <td>
+                    <input size="3" disabled id="finalSuspensionFront" data-bind="value: finalSuspensionFront" />
+                  </td>
+                </tr>
+                <tr data-bind="class: uncheckedSuspension">
+                  <td>Rear</td>
+                  <td>
+                    <input size="3" disabled id="finalSuspensionRear" data-bind="value: finalSuspensionRear" />
+                  </td>
+                </tr>
+                <tr class="antirollbar" data-bind="class: uncheckedAntiRollBar">
+                  <td rowspan=2>Anti-Roll Bar</td>
+                  <td>Front</td>
+                  <td>
+                    <input size="3" disabled id="finalAntiRollBarFront" data-bind="value: finalAntiRollBarFront" />
+                  </td>
+                </tr>
+                <tr data-bind="class: uncheckedAntiRollBar">
+                  <td>Rear</td>
+                  <td>
+                    <input size="3" disabled id="finalAntiRollBarRear" data-bind="value: finalAntiRollBarRear" />
+                  </td>
+                </tr>
+                <tr class="rideheight" data-bind="class: uncheckedRideHeight">
+                  <td rowspan=2>Ride Height</td>
+                  <td>Front</td>
+                  <td>
+                    <input size="3" disabled id="finalRideHeightFront" data-bind="value: finalRideHeightFront" />
+                  </td>
+                </tr>
+                <tr data-bind="class: uncheckedRideHeight">
+                  <td>Rear</td>
+                  <td>
+                    <input size="3" disabled id="finalRideHeightRear" data-bind="value: finalRideHeightRear" />
+                  </td>
+                </tr>
+                <tr class="tyrepressure" data-bind="class: uncheckedTyrePressure">
+                  <td rowspan=2>Tyre pressure</td>
+                  <td>Front</td>
+                  <td>
+                    <input size="3" disabled id="finalTyrePressureFront" data-bind="value: finalTyrePressureFront" />
+                  </td>
+                </tr>
+                <tr data-bind="class: uncheckedTyrePressure">
+                  <td>Rear</td>
+                  <td>
+                    <input size="3" disabled id="finalTyrePressureRear" data-bind="value: finalTyrePressureRear" />
+                  </td>
+                </tr>
+                <tr class="gears" data-bind="class: uncheckedGears">
+                  <td>Gears</td>
+                  <td>&nbsp;</td>
+                  <td>
+                    <input size="3" disabled id="finalGears" data-bind="value: finalGears" />
+                  </td>
+                </tr>
+                <tr style="display:none;">
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr class="brakebias" data-bind="class: uncheckedBrakeBias">
+                  <td>Brake bias</td>
+                  <td>&nbsp;</td>
+                  <td>
+                    <input size="3" disabled id="finalBrakeBias" data-bind="value: finalBrakeBias" />
+                  </td>
+                </tr>
+                <tr style="display:none;">
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr class="wheelstagerdifferential" data-bind="class: uncheckedWheelStagerDifferential">
+                  <td>Wheel Stager / Differential</td>
+                  <td>&nbsp;</td>
+                  <td>
+                    <input size="3" disabled id="finalWheelStagerDifferential" data-bind="value: finalWheelStagerDifferential" />
+                  </td>
+                </tr>
+                <tr style="display:none;">
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+              </table>
+            </div>
+          </form>
+        </div>
 
-				<div class="col-md-3">
-					<div class="page-header">
-						<h1>Team talk Output</h1>
-					</div>
-					<form class="form">
-						<div id="result" class="form-group" data-bind="html: results">
-	
-						</div>
-					</form>
-				</div>
+        <div class="col-md-3">
+          <div class="page-header">
+            <h1>Team talk Output</h1>
+          </div>
+          <form class="form">
+            <div id="result" class="form-group" data-bind="html: results">
+  
+            </div>
+          </form>
+        </div>
 
-			</div>
-			
-			<div class="row">
-				<div class="col-md-4 col-md-offset-4">
-					<form class="form" role="form">
-						<div class="form-group">
-							<div class="wrap">
-								<div class="">
-									<label for="sel_weather" class="label-control">
-										Weather
-									</label>
-									<select id="sel_weather" class="form-control"
-									data-bind="options: weatherConditions,
-										optionsText: 'displayName',
-										value: weatherAdjustment">
-									</select>
-								</div>
-								<div class="second">
-									<label for="specification" class="label-control">
-										Specification
-									</label>
-									<input size="3" class="form-control" type="text" id="specification" data-bind="value: specification">
-								</div>
-							</div>
-							<div class="range">
-								<div data-bind="text: rangeMin"></div>
-								<div class="inputRange">
-									<input type="range" class="form-control-range" id="formControlRange" data-bind="value: range, attr: {min: rangeMin, max: rangeMax}" >
-								</div>
-								<div data-bind="text: rangeMax"></div>
-							</div>
-							<div class="radio">
-								<label>
-									<input type="radio" id="dryToWet" name="weatherChange" value="true" data-bind="checked: dryToWet" />Dry to wet
-								</label>
-							</div>
-							<div class="radio">
-								<label>
-									<input type="radio" id="wetToDry" name="weatherChange" value="false" data-bind="checked: dryToWet" />Wet to dry
-								</label>
-							</div>
-						</div>
-					</form>
-				</div>
-			</div>
-		</div>
+      </div>
+      
+      <div class="row">
+        <div class="col-md-4 col-md-offset-4">
+          <form class="form" role="form">
+            <div class="form-group">
+              <div class="wrap">
+                <div class="">
+                  <label for="sel_weather" class="label-control">
+                    Weather
+                  </label>
+                  <select id="sel_weather" class="form-control"
+                  data-bind="options: weatherConditions,
+                    optionsText: 'displayName',
+                    value: weatherAdjustment">
+                  </select>
+                </div>
+                <div class="second">
+                  <label for="specification" class="label-control">
+                    Specification
+                  </label>
+                  <input size="3" class="form-control" type="text" id="specification" data-bind="value: specification">
+                </div>
+              </div>
+              <div class="range">
+                <div data-bind="text: rangeMin"></div>
+                <div class="inputRange">
+                  <input type="range" class="form-control-range" id="formControlRange" data-bind="value: range, attr: {min: rangeMin, max: rangeMax}" >
+                </div>
+                <div data-bind="text: rangeMax"></div>
+              </div>
+              <div class="radio">
+                <label>
+                  <input type="radio" id="dryToWet" name="weatherChange" value="true" data-bind="checked: dryToWet" />Dry to wet
+                </label>
+              </div>
+              <div class="radio">
+                <label>
+                  <input type="radio" id="wetToDry" name="weatherChange" value="false" data-bind="checked: dryToWet" />Wet to dry
+                </label>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
 
-		<script type="text/javascript" src="js/jquery-1.11.1.min.js"></script>
-		<script type="text/javascript" src="js/bootstrap.min.js"></script>
-		<script type="text/javascript" src="js/knockout-latest.js"></script>
-		<script type="text/javascript" src="js/app.js"></script>
+    <script type="text/javascript" src="js/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/knockout-latest.js"></script>
+    <script type="text/javascript" src="js/app.js"></script>
 
-	</body>
+  </body>
 </html>
