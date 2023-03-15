@@ -36,6 +36,7 @@ function BatracerCalculator () {
   self.tyrePressure = ko.observable(true);
   self.gearsI = ko.observable(true);
   self.brakeBiasI = ko.observable(true);
+  self.wheelStagerDifferentialI = ko.observable(true);
 
   self.uncheckedWings = ko.observable('');
   self.uncheckedSuspension = ko.observable('');
@@ -44,6 +45,7 @@ function BatracerCalculator () {
   self.uncheckedTyrePressure = ko.observable('');
   self.uncheckedGears = ko.observable('');
   self.uncheckedBrakeBias = ko.observable('');
+  self.uncheckedWheelStagerDifferential = ko.observable('');
 
   self.results = ko.observable('');
   self.myScriptPaste = ko.observable('');
@@ -68,6 +70,7 @@ function BatracerCalculator () {
     self.tyrePressure(false);
     self.gearsI(false);
     self.brakeBiasI(false);
+    self.wheelStagerDifferentialI(false);
 
     arraySetup.forEach(function (item, index, arr){
       if (item.length > 0){
@@ -104,6 +107,10 @@ function BatracerCalculator () {
           case 'Brake Bias':
             self.brakeBiasI(true);
             self.brakeBias(arr[index + 1]);
+          break;
+          case 'Wheel Stager / Differential':
+            self.wheelStagerDifferentialI(true);
+            self.wheelStagerDifferential(arr[index + 1]);
           break;
         }
       }
@@ -142,6 +149,7 @@ function BatracerCalculator () {
   self.tyrePressureRear = ko.observable(0);
   self.gears = ko.observable(0);
   self.brakeBias = ko.observable(0);
+  self.wheelStagerDifferential = ko.observable(0);
 
   // numbers for adjusting
   self.adjustWingsFront = ko.observable(20);
@@ -156,6 +164,7 @@ function BatracerCalculator () {
   self.adjustTyrePressureRear = ko.observable(12);
   self.adjustGears = ko.observable(-5);
   self.adjustBrakeBias = ko.observable(15);
+  self.adjustWheelStagerDifferential = ko.observable(10); // тут требуемый параметр вместо нуля
 
   // calculating adjusted number
   self.adjustNumber = function (setupVal, changeVal) {
@@ -270,8 +279,13 @@ function BatracerCalculator () {
 
     if (self.brakeBiasI()){
       self.uncheckedBrakeBias('');
-      resultString += 'Brake Bias<BR>' + self.getValue(self.finalBrakeBias()) + '<BR>';
+      resultString += 'Brake Bias<BR>' + self.getValue(self.finalBrakeBias()) + '<BR><BR>';
     } else {self.uncheckedBrakeBias('unchecked');}
+
+    if (self.wheelStagerDifferentialI()){
+      self.uncheckedWheelStagerDifferential('');
+      resultString += 'Wheel Stager / Differential<BR>' + self.getValue(self.finalWheelStagerDifferential()) + '<BR>';
+    } else {self.uncheckedWheelStagerDifferential('unchecked');}
 
     self.results(resultString);
 
@@ -290,7 +304,8 @@ function BatracerCalculator () {
     'finalTyrePressureFront': { 'one': 'tyrePressureFront', 'two': 'adjustTyrePressureFront' },
     'finalTyrePressureRear': { 'one': 'tyrePressureRear', 'two': 'adjustTyrePressureRear' },
     'finalGears': { 'one': 'gears', 'two': 'adjustGears' },
-    'finalBrakeBias': { 'one': 'brakeBias', 'two': 'adjustBrakeBias' }
+    'finalBrakeBias': { 'one': 'brakeBias', 'two': 'adjustBrakeBias' },
+    'finalWheelStagerDifferential': { 'one': 'wheelStagerDifferential', 'two': 'adjustWheelStagerDifferential' },
   }
   Object.keys(objTmp).map(function (objectKey) {
     var item = objTmp[objectKey];
@@ -301,7 +316,7 @@ function BatracerCalculator () {
 
   // sign function collectResultString to change variables
   var arrTmp = ['wings', 'suspension', 'antiRollBar', 'rideHeight', 'tyrePressure', 'gearsI', 'brakeBiasI', 'dryToWet', 'wingsFront', 'wingsRear', 'suspensionFront', 'suspensionRear',
-  'antiRollBarFront', 'antiRollBarRear', 'rideHeightFront', 'rideHeightRear', 'tyrePressureFront', 'tyrePressureRear', 'gears', 'brakeBias'];
+  'antiRollBarFront', 'antiRollBarRear', 'rideHeightFront', 'rideHeightRear', 'tyrePressureFront', 'tyrePressureRear', 'gears', 'brakeBias', 'wheelStagerDifferentialI'];
   arrTmp.forEach(function (item){
     self[item].subscribe(function (){
       self.collectResultString();
